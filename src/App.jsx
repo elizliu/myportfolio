@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-// Import your images (add these at the top after you save your images)
+// Import your images
 import ecodevo1 from './images/ecodevo-1.jpg';
 import ecodevo2 from './images/ecodevo-2.jpg';
 import ecodevo3 from './images/ecodevo-3.jpg';
@@ -41,9 +41,24 @@ function App() {
         "Founded the Beachwood CIC's innovation committee, funding $60K in forgivable loans for 3 R&D companies and launching a $1M revolving loan program"
       ],
       images: [
-        { src: ecodevo1, caption: "Biomedical Innovation Ecosystem", description: "Research planning and strategy development for biomedical cluster growth" },
-        { src: ecodevo2, caption: "Community Development Impact", description: "Generated $320K+ in tax benefits and $5M in capital investment" },
-        { src: ecodevo3, caption: "Innovation Committee Launch", description: "Founded committee that funded $60K in forgivable loans and $1M revolving loan program" }
+        { 
+          src: ecodevo1, 
+          caption: "North American Market Research", 
+          description: "Comprehensive market analysis across North America to identify trends and develop targeted marketing strategies for attracting companies to Beachwood",
+          pdfLink: "/pdfs/market-research.pdf"
+        },
+        { 
+          src: ecodevo2, 
+          caption: "BioMed Cluster Research", 
+          description: "Targeted research on companies in Beachwood to support the Director of Economic Development in building relationships and understanding the city's key industry sectors",
+          pdfLink: "/pdfs/beachwood-presence.pdf"
+        },
+        { 
+          src: ecodevo3, 
+          caption: "Innovation District Initial Research", 
+          description: "Foundational research that launched the City of Beachwood's innovation ecosystem project, providing ground-level guidance and real-world examples for implementation",
+          pdfLink: "/pdfs/innovation-district.pdf"
+        }
       ]
     },
     {
@@ -172,13 +187,20 @@ function App() {
                 {exp.images && (
                   <div className="image-gallery">
                     {exp.images.map((img, i) => (
-                      <div key={i} className="image-container">
+                      <a 
+                        key={i} 
+                        href={img.pdfLink} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="image-container"
+                      >
                         <img src={img.src} alt={img.caption} />
                         <div className="image-overlay">
                           <h4>{img.caption}</h4>
                           <p>{img.description}</p>
+                          <span className="view-pdf">View PDF →</span>
                         </div>
-                      </div>
+                      </a>
                     ))}
                   </div>
                 )}
