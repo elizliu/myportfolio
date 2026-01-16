@@ -381,6 +381,11 @@ body {
   background: rgba(255, 255, 255, 0.3);
 }
 
+/* Single image in gallery - make it smaller */
+.image-gallery:has(.image-container:only-child) {
+  grid-template-columns: minmax(250px, 400px);
+}
+
 /* Large screens (3 images side-by-side) */
 @media (min-width: 1201px) {
   .image-overlay {
