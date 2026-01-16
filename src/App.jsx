@@ -60,19 +60,19 @@ function App() {
           src: ecodevo1, 
           caption: "North American Market Research", 
           description: "Comprehensive market analysis across North America to identify trends and develop targeted marketing strategies for attracting companies to Beachwood",
-          pdfLink: "/pdfs/market-research.pdf"
+          pdfLink: "https://elizliu.github.io/myportfolio/pdfs/market-research.pdf"
         },
         { 
           src: ecodevo2, 
           caption: "BioMed Cluster Research", 
           description: "Targeted research on companies in Beachwood to support the Director of Economic Development in building relationships and understanding the city's key industry sectors",
-          pdfLink: "/pdfs/beachwood-presence.pdf"
+          pdfLink: "https://elizliu.github.io/myportfolio/pdfs/beachwood-presence.pdf"
         },
         { 
           src: ecodevo3, 
           caption: "Innovation District Initial Research", 
           description: "Foundational research that launched the City of Beachwood's innovation ecosystem project, providing ground-level guidance and real-world examples for implementation",
-          pdfLink: "/pdfs/innovation-district.pdf"
+          pdfLink: "https://elizliu.github.io/myportfolio/pdfs/innovation-district.pdf"
         }
       ]
     },
@@ -209,7 +209,7 @@ function App() {
           <div className="contact-links fade-in">
             <a href="mailto:el3206@columbia.edu">el3206@columbia.edu</a>
             <span>•</span>
-            <a href="/pdfs/Elizabeth Liu Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+            <a href="https://elizliu.github.io/myportfolio/pdfs/Elizabeth%20Liu%20Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
             <span>•</span>
             <a href="https://linkedin.com/in/elizabeth-liu-co29" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <span>•</span>
@@ -326,7 +326,7 @@ function App() {
                         <div className="image-overlay">
                           <h4>{img.caption}</h4>
                           <p>{img.description}</p>
-                          <span className="view-pdf">View PDF →</span>
+                          <span className="view-pdf">View→</span>
                         </div>
                       </a>
                     ))}
