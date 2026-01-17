@@ -224,6 +224,17 @@ function App() {
         </button>
       </section>
 
+      {/* About Section */}
+      <section className="section about-section">
+        <div className="container">
+          <h2 className="section-title">About</h2>
+          <div className="about-card">
+            <p>I'm a first-year Decision Science and AI student at Columbia University with experience spanning economic development in the public sector, marketing and project development, and quantitative work in AI/ML. From leading initiatives that generated $5M in capital investment to conducting game theory research with top academics, I thrive on solving challenging problems at the intersection of data, strategy, and real-world application.</p>
+            <p>I'm currently seeking opportunities in data science, analytics, and consulting where I can leverage my technical and strategic skills to create meaningful inpact.</p>
+          </div>
+        </div>
+      </section>
+
       {/* Education Section */}
       <section className="section education-section">
         <div className="container">
