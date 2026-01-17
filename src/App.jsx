@@ -141,7 +141,7 @@ function App() {
     {
       title: "Cambridge Future Scholar Programme",
       company: "Cambridge Centre for International Research",
-      location: "Cambridge, UK (remote)",
+      location: "Cambridge, UK (Remote)",
       period: "Jun. 2023 – Aug. 2023",
       highlights: [
         "Applied the Fearon Bargaining Model to a game-theory-based research paper on post–Wars of the Roses England",
@@ -161,6 +161,7 @@ function App() {
     {
       title: "Organizational Committee Member",
       org: "Columbia Society of Women Engineers",
+      location: "New York, NY",
       period: "Sep. 2025 – Present",
       highlights: [
         "Coordinate events and initiatives for a 500+ member student organization supporting women in STEM",
@@ -170,6 +171,7 @@ function App() {
     {
       title: "VP of Finance",
       org: "Hope Heroes Ohio",
+      location: "Beachwood, OH (Remote)",
       period: "Aug. 2024 – Jul. 2025",
       highlights: [
         "Created financial strategy within a 41-member team, coordinating fundraising that generated $238K+ in corporate sponsorships for children’s hospitals in NE Ohio, surpassing Junior Achievement global fundraising record by $40K",
@@ -179,6 +181,7 @@ function App() {
     {
       title: "Editor in Chief and Founder",
       org: "The Introspect",
+      location: "Remote",
       period: "Mar. 2023 – Jun. 2025",
       highlights: [
         "Founded and led a global online magazine with 50+ contributors across 14 US States and 8 countries; organized collaborative multimedia initiatives focusing on topics ranging from interconnectivity to nationalism"
@@ -301,6 +304,7 @@ function App() {
                 <div>
                   <h3>{item.title}</h3>
                   <p className="company">{item.org}</p>
+                  <p className="location">{item.location}</p>  {/* Add this line */}
                 </div>
                 <span className="period">{item.period}</span>
               </div>
