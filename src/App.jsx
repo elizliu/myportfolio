@@ -41,7 +41,7 @@ function App() {
     period: "Aug. 2025 – May 2029",
     gpa: "3.7983/4.00",
     coursework: "Data Structures and Algorithms, Multivariable Calculus, Data Engineering, Probability",
-    activities: "Society of Women Engineers (SWE), Jumpstarting Aspiring Developers and Entrepreneurs (JADE), Institute for Operations Research and the Management Sciences (CUINFORMS), Columbia Poker Club"
+    activities: "Society of Women Engineers (SWE), Jumpstarting Aspiring Developers and Entrepreneurs (JADE), Institute for Operations Research and the Management Sciences (CUINFORMS), Columbia Lioness Quantitative, Columbia Quant Group, Columbia Poker Club"
   };
 
   const experiences = [
