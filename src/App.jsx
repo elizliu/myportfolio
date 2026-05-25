@@ -36,12 +36,12 @@ function App() {
 
   const education = {
     school: "Columbia University",
-    degree: "Bachelor of Science in Decision Science & Data Analytics",
-    minor: "Minor in Artificial Intelligence",
+    degree: "Bachelor of Science in Operations Research",
+    minor: "Minor in Artificial Intelligence & Psychology",
     period: "Aug. 2025 – May 2029",
-    gpa: "3.7983/4.00",
+    gpa: "3.6871/4.00",
     coursework: "Data Structures and Algorithms, Multivariable Calculus, Data Engineering, Probability",
-    activities: "Society of Women Engineers (SWE), Jumpstarting Aspiring Developers and Entrepreneurs (JADE), Institute for Operations Research and the Management Sciences (CUINFORMS), Columbia Lioness Quantitative, Columbia Quant Group, Columbia Poker Club"
+    activities: "Society of Women Engineers (Secretary), Jumpstarting Aspiring Developers and Entrepreneurs, Institute for Operations Research and the Management Sciences (Treasurer), Greenborough Special Interest Community (Co-President)"
   };
 
   const experiences = [
@@ -159,13 +159,23 @@ function App() {
 
   const leadership = [
     {
+      title: "Secretary",
+      org: "Columbia Society of Women Engineers",
+      location: "New York, NY",
+      period: "Apr. 2026 – Present",
+      highlights: [
+        "Track and analyze member engagement data to inform programming decisions of 50 person leadership team",
+        "Author the weekly newsletter, serving as the organization’s primary communications channel to 1.4K+ members"
+      ]
+    },
+    {
       title: "Organizational Committee Member",
       org: "Columbia Society of Women Engineers",
       location: "New York, NY",
-      period: "Sep. 2025 – Present",
+      period: "Sep. 2025 – Apr. 2026",
       highlights: [
-        "Coordinate events and initiatives for a 500+ member student organization supporting women in STEM",
-        "Developing the 2026 SWE Engineering Exploration Experience (EEE) event, hosting 200+ high school students at Columbia University as part of a 6-member team"
+        "Developing Engineering Exploration Experience event, hosting 200+ high schoolers; part of a 6-member team",
+        "Leading outreach and recruitment efforts; secured 3 high-profile speakers (keynote and 2 industry panelists)"
       ]
     },
     {
@@ -177,6 +187,15 @@ function App() {
         "Created financial strategy within a 41-member team, coordinating fundraising that generated $238K+ in corporate sponsorships for children’s hospitals in NE Ohio, surpassing Junior Achievement global fundraising record by $40K",
         "Individually secured $5.5K in sponsorships; managed finances and pitch strategy for record-breaking initiative"
             ]
+    },
+    {
+      title: "Navigation Team Lead",
+      org: "Columbia Space Initiative | NASA SUITS Project",
+      location: "New York, NY",
+      period: "Sep. 2025 – Dec. 2025",
+      highlights: [
+        "Secured acceptance of Columbia’s NASA SUITS proposal by aligning 6 subteams around a cohesive submission"
+      ]
     },
     {
       title: "Editor in Chief and Founder",
@@ -199,7 +218,7 @@ function App() {
   const skills = {
     languages: "Python (Proficient), Java (Proficient), C++ (Intermediate), SQL (Intermediate), Stata (Intermediate)",
     tools: "NumPy, Matplotlib, pandas, Microsoft Office, Google Workspace",
-    interests: "Sculptural ceramics, fitness boxing and sparring, horror movies, making noodles"
+    interests: "classical violin (13 years), film analysis, gastronomy, human behavior, sculptural ceramics, strength training"
   };
 
   return (
@@ -208,7 +227,7 @@ function App() {
       <section className="hero">
         <div className="hero-content">
           <h1 className="typewriter">Elizabeth (Liz) Liu</h1>
-          <p className="subtitle fade-in">Decision Science & Data Analytics + Artificial Intelligence @ Columbia Engineering</p>
+          <p className="subtitle fade-in">Operations Research + Artificial Intelligence + Psychology @ Columbia Engineering</p>
           <div className="contact-links fade-in">
             <a href="mailto:el3206@columbia.edu">el3206@columbia.edu</a>
             <span>•</span>
