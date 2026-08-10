@@ -14,6 +14,11 @@ import ml3 from './images/ml-3.jpg';
 import ml4 from './images/ml-4.jpg';
 import roses from './images/roses.jpg';
 import introspect from './images/introspect.jpg';
+import hopeheroes from './images/hopeheroes.jpg';
+import swe1 from './images/swe1.jpg';
+import swe2 from './images/swe2.jpg';
+
+
 
 
 
@@ -37,14 +42,16 @@ function App() {
   const education = {
     school: "Columbia University",
     degree: "Bachelor of Science in Operations Research",
-    minor: "Minor in Artificial Intelligence & Psychology",
+    minor: "Minor in Artificial Intelligence & Philosophy",
     period: "Aug. 2025 – May 2029",
-    gpa: "3.6871/4.00",
+    gpa: "3.69/4.00",
     coursework: "Data Structures and Algorithms, Multivariable Calculus, Data Engineering, Probability",
     activities: "Society of Women Engineers (Secretary), Jumpstarting Aspiring Developers and Entrepreneurs, Institute for Operations Research and the Management Sciences (Treasurer), Greenborough Special Interest Community (Co-President)"
   };
 
   const experiences = [
+
+    
     {
       title: "Head Intern and Economic Research Analyst Intern",
       company: "City of Beachwood Economic Development Department",
@@ -159,23 +166,37 @@ function App() {
 
   const leadership = [
     {
-      title: "Secretary",
       org: "Columbia Society of Women Engineers",
       location: "New York, NY",
-      period: "Apr. 2026 – Present",
-      highlights: [
-        "Track and analyze member engagement data to inform programming decisions of 50 person leadership team",
-        "Author the weekly newsletter, serving as the organization’s primary communications channel to 1.4K+ members"
-      ]
-    },
-    {
-      title: "Organizational Committee Member",
-      org: "Columbia Society of Women Engineers",
-      location: "New York, NY",
-      period: "Sep. 2025 – Apr. 2026",
-      highlights: [
-        "Developing Engineering Exploration Experience event, hosting 200+ high schoolers; part of a 6-member team",
-        "Leading outreach and recruitment efforts; secured 3 high-profile speakers (keynote and 2 industry panelists)"
+      roles: [
+        {
+          title: "Secretary",
+          period: "Apr. 2026 – Present",
+          highlights: [
+            "Track and analyze member engagement data to guide programming decisions across 50-person leadership team",
+            "Author the weekly newsletter, serving as the organization's primary communications channel to 1.4K+ members"
+          ]
+        },
+        {
+          title: "Engineering Exploration Experience — Organizational Committee Member",
+          period: "Sep. 2025 – Apr. 2026",
+          highlights: [
+            "Secured 3 of 5 speakers including the keynote; organized programming for 200+ high schoolers (5-member team)",
+            "Founded Columbia SWE's WECode delegation; fully funding 4 participants with $1.2K+ in travel grants"
+          ]
+        }
+      ],
+      images: [
+        { 
+          src: swe1,  
+          caption: "EEE LinkedIn Post", 
+          pdfLink: "https://www.linkedin.com/feed/update/urn:li:activity:7450020436668633088/"
+        },
+        { 
+          src: swe2,  
+          caption: "WECode Conference LinkedIn Post", 
+          pdfLink: "https://www.linkedin.com/feed/update/urn:li:activity:7444586130743742464/"
+        }
       ]
     },
     {
@@ -186,7 +207,14 @@ function App() {
       highlights: [
         "Created financial strategy within a 41-member team, coordinating fundraising that generated $238K+ in corporate sponsorships for children’s hospitals in NE Ohio, surpassing Junior Achievement global fundraising record by $40K",
         "Individually secured $5.5K in sponsorships; managed finances and pitch strategy for record-breaking initiative"
-            ]
+            ],
+      images: [
+        { 
+          src: hopeheroes,  
+          caption: "Hope Heroes LinkedIn Post", 
+          pdfLink: "https://www.linkedin.com/posts/elizabeth-liu-co29_this-summer-ive-had-the-chance-to-reflect-activity-7364398674824577024-WLLZ?utm_source=share&utm_medium=member_desktop&rcm=ACoAADrRk2oBvzyGZwtfStzqyvlGA03Wg7qT8mA"
+        }
+      ]
     },
     {
       title: "Navigation Team Lead",
@@ -207,7 +235,7 @@ function App() {
       ],
       images: [
         { 
-          src: introspect,  // Make sure you imported this!
+          src: introspect,  
           caption: "The Introspect Website", 
           pdfLink: "https://theintrospectmagazine.wordpress.com/"
         }
@@ -216,9 +244,10 @@ function App() {
   ];
 
   const skills = {
-    languages: "Python (Proficient), Java (Proficient), C++ (Intermediate), SQL (Intermediate), Stata (Intermediate)",
+    programminglanguages: "Python (Proficient), SQL (Proficient), Java (Foundation), C++ (Foundation), , Stata (Foundation)",
+    languages: "English (native), Mandarin Chinese (conversational, heritage), Spanish (reading proficiency)",
     tools: "NumPy, Matplotlib, pandas, Microsoft Office, Google Workspace",
-    interests: "classical violin (13 years), film analysis, gastronomy, human behavior, sculptural ceramics, strength training"
+    interests: "ceramics, classical violin (13 years), film, food blogging, psychology, strength training"
   };
 
   return (
@@ -227,7 +256,7 @@ function App() {
       <section className="hero">
         <div className="hero-content">
           <h1 className="typewriter">Elizabeth (Liz) Liu</h1>
-          <p className="subtitle fade-in">Operations Research + Artificial Intelligence + Psychology @ Columbia Engineering</p>
+          <p className="subtitle fade-in">Operations Research + Philosophy @ Columbia Engineering</p>
           <div className="contact-links fade-in">
             <a href="mailto:el3206@columbia.edu">el3206@columbia.edu</a>
             <span>•</span>
@@ -248,7 +277,7 @@ function App() {
         <div className="container">
           <h2 className="section-title">About</h2>
           <div className="about-card">
-            <p>I'm a first-year Decision Science and AI student at Columbia University with experience spanning economic development in the public sector, marketing and project development, and quantitative work in AI/ML. From leading initiatives that generated $5M in capital investment to conducting game theory research with top academics, I thrive on solving challenging problems at the intersection of data, strategy, and real-world application.</p>
+            <p>I'm a second-year Operations Research, AI, and Philosophy student at Columbia University with experience spanning economic development in the public sector, marketing and project development, and quantitative work in AI/ML. From leading initiatives that generated $5M in capital investment to conducting game theory research with top academics, I thrive on solving challenging problems at the intersection of data, strategy, and real-world application.</p>
             <p>I'm currently seeking opportunities in data science, analytics, and consulting where I can leverage my technical and strategic skills to create meaningful impact.</p>
           </div>
         </div>
@@ -332,41 +361,68 @@ function App() {
             <div key={idx} className="card">
               <div className="card-header">
                 <div>
-                  <h3>{item.title}</h3>
                   <p className="company">{item.org}</p>
-                  <p className="location">{item.location}</p>  {/* Add this line */}
+                  <p className="location">{item.location}</p>
                 </div>
-                <span className="period">{item.period}</span>
               </div>
-              <div className="card-content">
-                <ul>
-                  {item.highlights.map((highlight, i) => (
-                    <li key={i}>{highlight}</li>
-                  ))}
-                </ul>
-                
-                {/* ADD THIS IMAGE GALLERY CODE */}
-                {item.images && (
-                  <div className="image-gallery">
-                    {item.images.map((img, i) => (
-                      <a 
-                        key={i} 
-                        href={img.pdfLink} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="image-container"
-                      >
-                        <img src={img.src} alt={img.caption} />
-                        <div className="image-overlay">
-                          <h4>{img.caption}</h4>
-                          <p>{img.description}</p>
-                          <span className="view-pdf">View→</span>
-                        </div>
-                      </a>
-                    ))}
+
+              {/* If item has roles (nested structure) */}
+              {item.roles ? (
+                item.roles.map((role, roleIdx) => (
+                  <div key={roleIdx} className="role-subsection">
+                    <div className="role-header">
+                      <h3>{role.title}</h3>
+                      <span className="period">{role.period}</span>
+                    </div>
+                    <div className="card-content">
+                      <ul>
+                        {role.highlights.map((highlight, i) => (
+                          <li key={i}>{highlight}</li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
-                )}
-              </div>
+                ))
+              ) : (
+                // Fallback for old flat structure
+                <>
+                  <div className="card-header">
+                    <div>
+                      <h3>{item.title}</h3>
+                    </div>
+                    <span className="period">{item.period}</span>
+                  </div>
+                  <div className="card-content">
+                    <ul>
+                      {item.highlights.map((highlight, i) => (
+                        <li key={i}>{highlight}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              )}
+
+              {/* Image gallery (if exists) */}
+              {item.images && (
+                <div className="image-gallery">
+                  {item.images.map((img, i) => (
+                    <a 
+                      key={i} 
+                      href={img.pdfLink} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="image-container"
+                    >
+                      <img src={img.src} alt={img.caption} />
+                      <div className="image-overlay">
+                        <h4>{img.caption}</h4>
+                        <p>{img.description}</p>
+                        <span className="view-pdf">View→</span>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -378,6 +434,10 @@ function App() {
           <h2 className="section-title">Skills & Interests</h2>
           <div className="card">
             <div className="card-content">
+              <div className="skill-group">
+                <h4>Programming Languages</h4>
+                <p>{skills.programminglanguages}</p>
+              </div>
               <div className="skill-group">
                 <h4>Languages</h4>
                 <p>{skills.languages}</p>
