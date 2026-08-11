@@ -202,7 +202,7 @@ function App() {
     {
       title: "VP of Finance",
       org: "Hope Heroes Ohio",
-      location: "Beachwood, OH (Remote)",
+      location: "Beachwood, OH",
       period: "Aug. 2024 – Jul. 2025",
       highlights: [
         "Created financial strategy within a 41-member team, coordinating fundraising that generated $238K+ in corporate sponsorships for children’s hospitals in NE Ohio, surpassing Junior Achievement global fundraising record by $40K",
