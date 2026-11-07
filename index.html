@@ -696,58 +696,34 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
     addEventListener('scroll',function(){setNear()},{passive:true});
     document.addEventListener('pointerleave',function(){mouse=null;near=0});
   }
-  // Opening flourish: a whimsical sparkle path through the header
+  // Opening flourish: replays Liz's recorded path under the name and across the photos
+  var PATH=[[0.0,-0.13,1.052,-1.745,0.244],[0.08,-0.093,1.089,-1.711,0.247],[0.17,-0.054,1.144,-1.675,0.251],[0.25,-0.017,1.181,-1.641,0.254],[0.33,0.027,1.256,-1.6,0.259],[0.42,0.084,1.274,-1.547,0.261],[0.5,0.149,1.274,-1.488,0.261],[0.58,0.227,1.293,-1.416,0.262],[0.67,0.333,1.293,-1.318,0.262],[0.75,0.441,1.293,-1.218,0.262],[0.83,0.519,1.33,-1.146,0.265],[0.92,0.585,1.348,-1.084,0.266],[1.0,0.675,1.348,-1.002,0.266],[1.08,0.783,1.348,-0.902,0.266],[1.17,0.873,1.293,-0.819,0.262],[1.25,0.958,1.274,-0.74,0.261],[1.33,1.034,1.274,-0.67,0.261],[1.42,1.05,1.274,-0.656,0.261],[1.5,1.05,1.274,-0.656,0.261],[1.58,1.05,1.274,-0.656,0.261],[1.67,1.05,1.274,-0.656,0.261],[1.75,1.096,1.256,-0.613,0.259],[1.83,1.238,1.219,-0.481,0.257],[1.92,1.296,1.219,-0.428,0.257],[2.0,1.342,1.2,-0.386,0.255],[2.08,1.39,1.237,-0.341,0.258],[2.17,1.434,1.348,-0.301,0.266],[2.25,1.473,1.607,-0.265,0.286],[2.33,1.496,1.848,-0.244,0.304],[2.42,1.516,2.033,-0.225,0.319],[2.5,1.533,2.219,-0.21,0.333],[2.58,1.546,2.385,-0.197,0.345],[2.67,1.558,2.515,-0.186,0.355],[2.75,1.572,2.644,-0.174,0.365],[2.83,1.592,2.793,-0.154,0.376],[2.92,1.622,2.941,-0.127,0.387],[3.0,1.668,3.033,-0.084,0.394],[3.17,1.797,3.107,0.034,0.4],[3.33,1.847,3.107,0.081,0.4],[3.5,1.939,3.033,0.166,0.394],[3.67,2.077,2.811,0.293,0.378],[3.83,2.165,2.478,0.374,0.352],[4.0,2.234,2.181,0.438,0.33],[4.17,2.257,2.07,0.459,0.321],[4.33,2.252,2.033,0.455,0.319],[4.5,2.298,1.293,0.497,0.262],[4.67,2.303,0.811,0.502,0.226],[4.83,2.261,0.811,0.463,0.226],[5.0,2.298,1.293,0.497,0.262],[5.17,2.427,1.996,0.616,0.316],[5.33,2.422,2.7,0.612,0.369],[5.5,2.261,3.922,0.463,0.462],[5.67,2.252,5.256,0.455,0.563],[5.83,2.312,6.033,0.51,0.622],[6.0,2.298,6.811,0.497,0.681],[6.17,2.229,6.848,0.434,0.684],[6.33,2.169,6.219,0.378,0.636],[6.5,2.123,5.774,0.336,0.603],[6.67,2.045,5.478,0.264,0.58],[6.83,1.944,5.293,0.17,0.566],[7.0,1.829,5.663,0.064,0.594],[7.17,1.756,6.219,-0.004,0.636],[7.33,1.746,6.404,-0.012,0.65],[7.42,1.744,6.459,-0.014,0.655],[7.5,1.742,6.459,-0.016,0.655],[7.58,1.733,6.737,-0.025,0.676],[7.67,1.707,7.33,-0.048,0.721],[7.75,1.689,7.719,-0.065,0.75],[7.83,1.668,8.07,-0.084,0.777],[7.92,1.647,8.311,-0.104,0.795],[8.0,1.634,8.478,-0.116,0.808],[8.08,1.622,8.607,-0.127,0.818],[8.17,1.611,8.756,-0.138,0.829],[8.25,1.597,8.885,-0.15,0.839],[8.33,1.583,8.978,-0.163,0.846],[8.42,1.569,9.033,-0.176,0.85],[8.5,1.556,9.052,-0.188,0.852],[8.58,1.546,9.033,-0.197,0.85]];
   function intro(){
     if(!on) return;
     var home=document.querySelector('#view-home:not([hidden])'); if(!home) return;
-    var h1=home.querySelector('h1'),col=home.querySelector('.collage'),lede=home.querySelector('.lede'),bio=home.querySelector('.bio'),roles=home.querySelector('.roles');
-    if(!h1||!col||!bio) return;
-    var N=h1.getBoundingClientRect(),C=col.getBoundingClientRect(),Ld=(lede||bio).getBoundingClientRect(),Bo=bio.getBoundingClientRect(),Ro=(roles||bio).getBoundingClientRect();
-    var maxY=innerHeight-24,pts=[];
-    function cy(y){return Math.min(y,maxY)}
-    function push(px,py){pts.push({x:px,y:cy(py)})}
-    function bez(p0,p1,p2,n){for(var i=1;i<=n;i++){var t=i/n,u=1-t;push(u*u*p0.x+2*u*t*p1.x+t*t*p2.x,u*u*p0.y+2*u*t*p1.y+t*t*p2.y)}}
-    function last(){return pts[pts.length-1]}
-    // 1. glide under the name with a soft wave
-    var y1=N.bottom+12,x0=N.left-16,x1=N.right+24;
-    for(var i=0;i<=60;i++){var t=i/60;push(x0+(x1-x0)*t,y1+Math.sin(t*Math.PI*2)*7)}
-    // 2. arc up and over to the photos
-    var cTop=C.top+C.height*.3;
-    bez(last(),{x:(x1+C.left)/2,y:N.top-30},{x:C.left+8,y:cTop},50);
-    // 3. three loop-de-loops left to right across the photos
-    var R1=Math.min(C.width*.11,46),span=C.width-16,loops=3,w=2*Math.PI*loops,v=span/w;
-    var bx=C.left+8;
-    for(var i=0;i<=150;i++){var th=w*i/150;push(bx+v*th-R1*Math.sin(th),cTop+R1*(1-Math.cos(th))-R1*0)}
-    // 4. swing down the right edge
-    var cLow=Math.min(C.top+C.height*.72,maxY-40);
-    bez(last(),{x:C.right+40,y:(cTop+cLow)/2},{x:C.right-8,y:cLow},40);
-    // 5. two loops right to left across the lower photos
-    var R2=Math.min(C.width*.1,40),w2=2*Math.PI*2,v2=(C.width-16)/w2,sx=C.right-8;
-    for(var i=0;i<=110;i++){var th=w2*i/110;push(sx-v2*th+R2*Math.sin(th),cLow-R2*(1-Math.cos(th)))}
-    // 6. drift over into the text
-    var midY=(Ld.top+Bo.bottom)/2,amp=Math.min(36,(Bo.bottom-Ld.top)/3);
-    bez(last(),{x:(C.left+Ld.right)/2,y:cLow-60},{x:Ld.right,y:midY},50);
-    // 7. swirl through the text, right to left
-    var tx0=Ld.right,tx1=Ld.left+10,cycles=2.5;
-    for(var i=1;i<=160;i++){var t=i/160;push(tx0+(tx1-tx0)*t,midY+Math.sin(t*Math.PI*2*cycles)*amp)}
-    // 8. one small curl, then drift down and away
-    var cx0=last().x,cy0=last().y,rr=22;
-    for(var i=1;i<=40;i++){var th=Math.PI*2*i/40;push(cx0+rr*Math.sin(th),cy0-rr+rr*Math.cos(th))}
-    bez(last(),{x:Ld.left+60,y:(cy0+Ro.bottom)/2},{x:Ld.left+140,y:Ro.bottom+30},50);
-    // arc-length parametrize
-    var L=[0];for(var i=1;i<pts.length;i++) L.push(L[i-1]+Math.hypot(pts[i].x-pts[i-1].x,pts[i].y-pts[i-1].y));
-    var total=L[L.length-1],dur=Math.max(5200,Math.min(8000,total/0.42)),start=null,idx=0;
-    function at(d){while(idx<L.length-2&&L[idx+1]<d) idx++;var seg=L[idx+1]-L[idx]||1,f=(d-L[idx])/seg;return {x:pts[idx].x+(pts[idx+1].x-pts[idx].x)*f,y:pts[idx].y+(pts[idx+1].y-pts[idx].y)*f}}
+    var h1=home.querySelector('h1'),col=home.querySelector('.collage'); if(!h1||!col) return;
+    var rg=document.createRange();rg.selectNodeContents(h1);var R=rg.getBoundingClientRect(),w=R.width,hh=R.height;
+    var H={l:R.left+w*.012,t:R.top+hh*.17,r:R.right-w*.011,b:R.bottom-hh*.2};
+    var C=col.getBoundingClientRect();
+    var P2=PATH.map(function(q){var t=q[0],k=t<=2?0:t>=3.1?1:(t-2)/1.1;k=k*k*(3-2*k);
+      var nx=H.l+q[1]*(H.r-H.l),ny=H.t+q[2]*(H.b-H.t),cx=C.left+q[3]*C.width,cy=C.top+q[4]*C.height;
+      return {t:t*1000,x:nx+(cx-nx)*k,y:ny+(cy-ny)*k}});
+    var end=P2[P2.length-1].t,start=null,j=0;
+    function cr(a,b,c,d,u){var u2=u*u,u3=u2*u;return .5*((2*b)+(-a+c)*u+(2*a-5*b+4*c-d)*u2+(-a+3*b-3*c+d)*u3)}
+    function at(ms){
+      while(j<P2.length-2&&P2[j+1].t<ms) j++;
+      var p0=P2[Math.max(j-1,0)],p1=P2[j],p2=P2[j+1],p3=P2[Math.min(j+2,P2.length-1)];
+      var u=Math.max(0,Math.min(1,(ms-p1.t)/((p2.t-p1.t)||1)));
+      return {x:cr(p0.x,p1.x,p2.x,p3.x,u),y:cr(p0.y,p1.y,p2.y,p3.y,u)};
+    }
     introRunning=true;lastSpawn=null;
     function step(ts){
       if(!on){introRunning=false;return}
       if(start===null) start=ts;
-      var k=Math.min((ts-start)/dur,1);
-      var e=0.5-0.5*Math.cos(Math.PI*k); e=e*.25+k*.75;
-      var p=at(e*total);
-      var keep=k>.85?(1-k)/.15:1;
-      if(Math.random()<keep) trailAt(p.x,p.y,13,4);
-      if(k<1) requestAnimationFrame(step); else {introRunning=false;lastSpawn=null}
+      var ms=ts-start;if(ms>end) ms=end;
+      var p=at(ms),keep=ms>end-700?(end-ms)/700:1;
+      if(Math.random()<keep) trailAt(p.x,p.y,16,4);
+      if(ms<end) requestAnimationFrame(step); else {introRunning=false;lastSpawn=null}
     }
     requestAnimationFrame(step);
   }
