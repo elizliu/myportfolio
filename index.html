@@ -696,34 +696,32 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
     addEventListener('scroll',function(){setNear()},{passive:true});
     document.addEventListener('pointerleave',function(){mouse=null;near=0});
   }
-  // Opening flourish: glide under the name, loop across the photos, bubble at the quote
+  // Opening flourish: follows Liz's sketched path (under the name, loops through the photo gap, a wide sweep, then bubbles at the quote)
+  var SKETCH=[[120,240,0],[220,298,220],[450,305,440],[700,305,640],[950,315,830],[1130,350,990],[1255,430,1130],[1350,500,1250],[1460,510,1360],[1535,480,1460],[1548,380,1600],[1565,290,1760],[1595,262,1880],[1618,300,1940],[1605,400,2010],[1580,480,2080],[1588,580,2170],[1600,650,2260],[1660,628,2360],[1710,660,2430],[1698,725,2480],[1640,745,2530],[1600,705,2590],[1490,700,2690],[1290,705,2820],[1190,780,2940],[1130,940,3120],[950,1080,3330],[650,1125,3540],[330,1080,3750],[120,920,3940],[65,700,4120],[110,580,4290],[165,548,4460]];
   function intro(){
     if(!on) return;
     var home=document.querySelector('#view-home:not([hidden])'); if(!home) return;
-    var h1=home.querySelector('h1'),hs=home.querySelector('.collage .headshot'),lede=home.querySelector('.lede'); if(!h1||!hs||!lede) return;
+    var h1=home.querySelector('h1'),hs=home.querySelector('.collage .headshot'),lede=home.querySelector('.lede'),roles=home.querySelector('.roles'); if(!h1||!hs||!lede) return;
     var rg=document.createRange();rg.selectNodeContents(h1);var R=rg.getBoundingClientRect(),w=R.width,hh=R.height;
-    var H={l:R.left+w*.012,t:R.top+hh*.17,r:R.right-w*.011,b:R.bottom-hh*.2};
-    var S=hs.getBoundingClientRect(),sw=S.width,sh=S.height;
+    var H={l:R.left+w*.012,t:R.top+hh*.17,b:R.bottom-hh*.2};
+    var S=hs.getBoundingClientRect();
     var r2=document.createRange();r2.selectNodeContents(lede);var lr=r2.getClientRects(),LL=lr[lr.length-1],LA=lede.getBoundingClientRect();
-    function q(a,c,b2,u){var v=1-u;return {x:v*v*a.x+2*v*u*c.x+u*u*b2.x,y:v*v*a.y+2*v*u*c.y+u*u*b2.y}}
-    function eIO(u){return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2}
-    function eIn(u){return u*u}
-    function eOut(u){return 1-(1-u)*(1-u)}
-    var p0={x:H.l-24,y:H.b+14},p1={x:H.r+28,y:H.b+12};
-    var loopY=S.top+sh*.78,lx0=S.left+sw*.02,lx1=S.right+sw*.32,TH=Math.PI*4,lv=(lx1-lx0)/TH,R0=lv*1.75;
-    var loopStart={x:lx0,y:loopY};
-    function loopPt(u){var th=TH*u;return {x:lx0+lv*th-R0*Math.sin(th),y:loopY-R0*(1-Math.cos(th))}}
-    var loopEnd=loopPt(1),dn={x:S.right-sw*.05,y:S.bottom-sh*.06},bl={x:S.left-6,y:S.bottom-sh*.05},tgt={x:LL.right-18,y:LL.top+LL.height*.55};
-    var SEG=[
-      {d:620,f:function(u){var e=eIO(u);return {x:p0.x+(p1.x-p0.x)*e,y:p0.y+(p1.y-p0.y)*e+Math.sin(e*Math.PI*2)*6}}},
-      {d:340,f:function(u){return q(p1,{x:S.left-sw*.25,y:H.b+30},loopStart,eIn(u)*.6+u*.4)}},
-      {d:1150,f:function(u){return loopPt(u)}},
-      {d:300,f:function(u){return q(loopEnd,{x:S.right+sw*.45,y:S.top+sh*.95},dn,u)}},
-      {d:380,f:function(u){return q(dn,{x:S.left+sw*.5,y:S.bottom+sh*.04},bl,eOut(u))}},
-      {d:520,f:function(u){return q(bl,{x:S.left-sw*.55,y:LL.top-60},tgt,eIO(u))}}
-    ];
-    var total=SEG.reduce(function(a,s){return a+s.d},0),start=null;
-    function at(ms){var acc=0;for(var i=0;i<SEG.length;i++){if(ms<=acc+SEG[i].d||i===SEG.length-1) return SEG[i].f(Math.min(1,(ms-acc)/SEG[i].d));acc+=SEG[i].d}}
+    var RB=(roles||lede).getBoundingClientRect().bottom;
+    function pw(v,A){ // piecewise-linear map from sketch coords to page coords
+      for(var i=0;i<A.length-1;i++){if(v<=A[i+1][0]||i===A.length-2){var a=A[i],c=A[i+1];return a[1]+(v-a[0])*(c[1]-a[1])/(c[0]-a[0])}}
+    }
+    var AX=[[170,H.l],[1255,S.left],[1577,S.right]];
+    var AY=[[47,S.top],[195,H.t],[282,H.b],[550,LL.top+LL.height/2],[697,S.bottom],[1030,RB]];
+    var maxY=innerHeight-14;
+    var P2=SKETCH.map(function(p){return {x:pw(p[0],AX),y:Math.min(pw(p[1],AY),maxY),t:p[2]}});
+    var end=P2[P2.length-1].t,tgt=P2[P2.length-1],start=null,j=0;
+    function cr(a,b2,c,d,u){var u2=u*u,u3=u2*u;return .5*((2*b2)+(-a+c)*u+(2*a-5*b2+4*c-d)*u2+(-a+3*b2-3*c+d)*u3)}
+    function at(ms){
+      while(j<P2.length-2&&P2[j+1].t<ms) j++;
+      var p0=P2[Math.max(j-1,0)],p1=P2[j],p2=P2[j+1],p3=P2[Math.min(j+2,P2.length-1)];
+      var u=Math.max(0,Math.min(1,(ms-p1.t)/((p2.t-p1.t)||1)));
+      return {x:cr(p0.x,p1.x,p2.x,p3.x,u),y:cr(p0.y,p1.y,p2.y,p3.y,u)};
+    }
     introRunning=true;lastSpawn=null;
     function drop(px,py){count++;
       add(px+(Math.random()-.5)*7,py+(Math.random()-.5)*7,count%4===0,false,false,true);
@@ -746,7 +744,7 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
     var BUB=1300;
     function bubble(){
       pop();var bs=null,last=0;
-      function b(ts){
+      function b2(ts){
         if(!on){introRunning=false;return}
         if(bs===null) bs=ts;var ms=ts-bs;
         var dens=ms<BUB-450?1:Math.max(0,(BUB-ms)/450);
@@ -755,15 +753,15 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
           add(px,py,Math.random()<.4,false,true);
           add(px+(Math.random()-.5)*26,py+(Math.random()-.5)*16,false,true,true);
         }
-        if(ms<BUB) requestAnimationFrame(b); else {introRunning=false;lastSpawn=null}
+        if(ms<BUB) requestAnimationFrame(b2); else {introRunning=false;lastSpawn=null}
       }
-      requestAnimationFrame(b);
+      requestAnimationFrame(b2);
     }
     function step(ts){
       if(!on){introRunning=false;return}
       if(start===null) start=ts;
-      var ms=Math.min(ts-start,total),p=at(ms);trail(p.x,p.y);
-      if(ms<total) requestAnimationFrame(step); else bubble();
+      var ms=Math.min(ts-start,end),p=at(ms);trail(p.x,p.y);
+      if(ms<end) requestAnimationFrame(step); else bubble();
     }
     requestAnimationFrame(step);
   }
