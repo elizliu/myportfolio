@@ -72,7 +72,7 @@ figcaption b{color:var(--ink);font-weight:600;display:block}
 .flow img{width:auto;max-width:100%;max-height:80vh;margin-inline:auto;height:auto;border-radius:10px;display:block}
 
 /* phases — a real sequence, so numbered */
-.phases{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.phases{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .phases li{background:var(--surface);padding:18px 18px 20px;display:flex;flex-direction:column;gap:6px;min-width:0}
 .phases li.now{background:var(--accent-soft)}
 .phases .n{font:500 .74rem/1 var(--mono);color:var(--muted);letter-spacing:.06em}
@@ -101,7 +101,7 @@ footer h3{flex-basis:100%}
 .roles dd{margin:0;font-size:1.02rem;color:var(--muted)}
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:clamp(14px,2vw,24px);align-items:start}
 .gallery.two{grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),520px));justify-content:center}
-.gallery.banners{grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))}
+.gallery.banners{grid-template-columns:repeat(2,minmax(0,1fr));max-width:1100px;margin-inline:auto}
 .vis{gap:28px}
 .vis figure img{width:100%;max-width:100%;max-height:none;height:auto;background:none;border-radius:10px}
 .vis .gallery{justify-items:center}
@@ -139,7 +139,7 @@ footer h3{flex-basis:100%}
 .cluster{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:clamp(32px,5vw,56px)}
 .cluster figure{margin:0}
 .cluster figure img{height:clamp(120px,16.5vw,285px);width:auto;max-width:100%;max-height:none;border-radius:10px}
-@media (max-width:640px){.roles{grid-template-columns:1fr}.featured{grid-template-columns:1fr}.cluster figure img{height:auto;width:100%}.cluster figure{width:calc(50% - 8px)}}
+@media (max-width:640px){.gallery.banners{grid-template-columns:1fr}.phases{grid-template-columns:1fr}.roles{grid-template-columns:1fr}.featured{grid-template-columns:1fr}.cluster figure img{height:auto;width:100%}.cluster figure{width:calc(50% - 8px)}}
 .timeline{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .timeline li{background:var(--surface);padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0;font-size:1.05rem;line-height:1.4}
 .timeline .d{font:500 .74rem/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
@@ -178,7 +178,7 @@ footer h3{flex-basis:100%}
     <p class="label">Case study · Fall 2026 · In progress</p>
     <h2>Rating dining hall food on LionDine</h2>
     <div class="meta">
-      <div><span class="label">Product</span><p>LionDine, Columbia Spectator’s dining app and website, used by thousands of students every day</p></div>
+      <div><span class="label">Product</span><p>LionDine, Columbia Spectator’s dining app and website (<a href="https://liondine.com/" target="_blank" rel="noopener">web version</a>), used by thousands of students every day</p></div>
       <div><span class="label">My role</span><p>I wrote the proposal for adding social ratings to LionDine. I also designed two features: bookmarking, which notifies students when a favorite dish is back, and the first prototype draft integrating a dish rating feature within the Spec mobile app.</p></div>
       <div><span class="label">Tool</span><p>Figma (high-fidelity screens, clickable prototype)</p></div>
     </div>
@@ -206,7 +206,7 @@ footer h3{flex-basis:100%}
     <div class="col stack">
       <p class="label">Feature 1 · Bookmarking</p>
       <h3>Get notified when a dish is back</h3>
-      <p>I started small. When you find a dish you love, there’s no way to know when it’ll be served again. Tap the bookmark and LionDine tells you the next time it’s on the menu.</p>
+      <p>I started small. When you find a dish you love, it’s very easy to miss the next time it’s served if you, for example, sleep in late or forget to check LionDine. Tap the bookmark and LionDine notifies you the next time it’s on the menu.</p>
     </div>
     <div class="tray">
       <div class="screens">
@@ -222,16 +222,17 @@ footer h3{flex-basis:100%}
     <div class="col stack">
       <p class="label">The proposal</p>
       <h3>Start anonymous, add friends later</h3>
-      <p>I wrote a proposal for a social side of LionDine inside the Spectator app. The menu stays the same. Next to it, students can rate dishes, post photos, and see what their friends are eating. If students open the app every day, Spec also gets more ad impressions and room for dining sponsorships.</p>
-      <p>The big open question is logins. Nothing Spec makes today requires an account, and the team is still debating whether this should be the first. The fully social version, with friends, following, and your own rating history, needs accounts. An anonymous version, closer to CULPA, works for everyone right away. It’s less personal, though, and anonymous posts tend to skew very good or very bad.</p>
-      <p>So the rollout does both, in order. Phase 1 is anonymous and needs no sign-in, which also means the feed isn’t empty at launch. Accounts come later and stay optional, and friends come last, once there’s enough activity to make them worth it.</p>
+      <p>I wrote a proposal for a social side of LionDine inside the Spectator app. The menu stays the same, preserving the original LionDine brand identity and feel. Next to it, students can rate dishes, post photos, and see what their friends are eating.</p>
+      <p>It also helps Spectator as a business. Right now, most students open LionDine for a few seconds to check the menu and leave. A social feed gives them a reason to stay longer and come back every day. More time in the app means more ad impressions for Spec, and it opens the door to sponsorships from dining-related partners, like local restaurants or food brands.</p>
+      <p>The big open question is logins. Nothing Spec makes today requires an account, and the team is still debating whether this should be the first. The fully social version, with friends, following, and your own rating history, needs accounts. An anonymous version, closer to <a href="https://www.culpa.info/" target="_blank" rel="noopener">CULPA</a> (Columbia’s anonymous course and professor review site), works for everyone right away. It’s less personal, though, and anonymous posts tend to skew very good or very bad.</p>
+      <p>So the rollout does both, in order. Phase 1 is anonymous and needs no sign-in, which also means the feed isn’t empty at launch. Accounts come later and stay optional. Friends and following come last, once there’s enough activity to make them worth it.</p>
     </div>
     <ol class="phases">
       <li class="now"><span class="n">PHASE 1 · DESIGNED</span><b>Anonymous reviews</b><p>Rate a dish with tags and a photo. Campus-wide and per-dish feeds, newest first.</p></li>
-      <li><span class="n">PHASE 2</span><b>Upvotes</b><p>Students vote on which reviews were useful.</p></li>
+      <li><span class="n">PHASE 2</span><b>Upvotes</b><p>Students vote on which reviews were useful, and this is reflected in the feed.</p></li>
       <li><span class="n">PHASE 3</span><b>Trends</b><p>Top dishes of the day and week, once there are enough reviews to rank.</p></li>
       <li><span class="n">PHASE 4</span><b>Optional accounts</b><p>Save your own history. Public reviews stay anonymous.</p></li>
-      <li><span class="n">PHASE 5</span><b>Engagement</b><p>Karma, dining hall visit tracking, personal rankings.</p></li>
+      <li><span class="n">PHASE 5</span><b>Engagement</b><p>Karma (points for getting upvotes), dining hall visit tracking, personal rankings.</p></li>
       <li><span class="n">PHASE 6</span><b>Friends</b><p>Mutual follows and a friends feed. Only friends see who posted.</p></li>
     </ol>
     <div class="col stack">
@@ -255,9 +256,9 @@ footer h3{flex-basis:100%}
       </div>
     </div>
     <div class="decisions">
-      <div><span class="label">Choice</span><p><b>Rate from the dish, not a search bar.</b> The first demo started with search. If you’re already looking at the eggs, you shouldn’t have to type “eggs.”</p></div>
+      <div><span class="label">Choice</span><p><b>Rate from the dish, not a search bar.</b> The first demo started with search. If you’re already looking at the eggs, you shouldn’t have to type “eggs.” Search will still be an option for rating a dish that isn’t on today’s menu, or one you remember from the past.</p></div>
       <div><span class="label">Choice</span><p><b>Scores go on the menu.</b> That’s the screen where people decide what to eat.</p></div>
-      <div><span class="label">Choice</span><p><b>A dash for no reviews.</b> Most dishes won’t have reviews at first. A 0 would look like a bad dish.</p></div>
+      <div><span class="label">Choice</span><p><b>A dash for no reviews.</b> Most dishes won’t have reviews at first. Starting from 0.0 would look like a badly rated dish and would be confusing.</p></div>
     </div>
   </section>
 
