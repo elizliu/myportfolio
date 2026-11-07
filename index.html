@@ -654,12 +654,12 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
       if(d<28) best=Math.max(best,1-d/28);
     });return best;
   }
-  function add(px,py,big,fleck,rise){
+  function add(px,py,big,fleck,rise,burst){
     var gold=!fleck&&(big||Math.random()<.7);
-    P.push({x:px,y:py,vx:(Math.random()-.5)*(rise?.35:.25),vy:rise?-(.18+Math.random()*.32):Math.random()*.15+.05,
+    P.push({x:px,y:py,vx:(Math.random()-.5)*(burst?.7:rise?.35:.25),vy:rise?-(.18+Math.random()*.32):(burst?(Math.random()-.4)*.7:Math.random()*.15+.05),
       r:big?7+Math.random()*5:(gold?3+Math.random()*2.5:1.3+Math.random()*.9),big:gold,a:Math.random()*.6-.3,
       life:0,max:(big?900+Math.random()*300:600+Math.random()*300)*(rise?1.4:1),c:gold?GOLD:tiny[(Math.random()*tiny.length)|0]});
-    if(P.length>160) P.shift();
+    if(P.length>420) P.shift();
     if(!running){running=true;prev=performance.now();requestAnimationFrame(tick)}
   }
   function star(p,al,sc){
@@ -702,7 +702,7 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
     if(!on) return;
     var home=document.querySelector('#view-home:not([hidden])'); if(!home) return;
     var h1=home.querySelector('h1'),col=home.querySelector('.collage'),lede=home.querySelector('.lede'); if(!h1||!col) return;
-    var SPEED=.55;
+    var SPEED=.3;
     var rg=document.createRange();rg.selectNodeContents(h1);var R=rg.getBoundingClientRect(),w=R.width,hh=R.height;
     var H={l:R.left+w*.012,t:R.top+hh*.17,r:R.right-w*.011,b:R.bottom-hh*.2};
     var C=col.getBoundingClientRect();
@@ -714,7 +714,7 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
     var Lr=lede?(function(){var r2=document.createRange();r2.selectNodeContents(lede);var rs=r2.getClientRects();return {all:lede.getBoundingClientRect(),last:rs[rs.length-1]}})():null;
     if(Lr){
       var a=P2[P2.length-1],tgt={x:Lr.last.right-20,y:Lr.last.top+Lr.last.height*.55},t0=a.t,mid={x:(a.x+tgt.x)/2+40,y:Math.min(a.y,tgt.y)-30};
-      for(var i=1;i<=14;i++){var u=i/14,v=1-u;P2.push({t:t0+u*650,x:v*v*a.x+2*v*u*mid.x+u*u*tgt.x,y:v*v*a.y+2*v*u*mid.y+u*u*tgt.y})}
+      for(var i=1;i<=14;i++){var u=i/14,v=1-u;P2.push({t:t0+u*380,x:v*v*a.x+2*v*u*mid.x+u*u*tgt.x,y:v*v*a.y+2*v*u*mid.y+u*u*tgt.y})}
     }
     var end=P2[P2.length-1].t,start=null,j=0;
     function cr(a,b,c,d,u){var u2=u*u,u3=u2*u;return .5*((2*b)+(-a+c)*u+(2*a-5*b+4*c-d)*u2+(-a+3*b-3*c+d)*u3)}
@@ -725,20 +725,28 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
       return {x:cr(p0.x,p1.x,p2.x,p3.x,u),y:cr(p0.y,p1.y,p2.y,p3.y,u)};
     }
     introRunning=true;lastSpawn=null;
-    function trail(px,py){
-      if(lastSpawn&&Math.hypot(px-lastSpawn.x,py-lastSpawn.y)<9) return;
-      lastSpawn={x:px,y:py};count++;
-      add(px+(Math.random()-.5)*8,py+(Math.random()-.5)*8,count%3===0);
-      if(Math.random()<.75) add(px+(Math.random()-.5)*24,py+(Math.random()-.5)*24,false,true);
+    function drop(px,py){count++;
+      add(px+(Math.random()-.5)*18,py+(Math.random()-.5)*18,count%3===0,false,false,true);
+      if(Math.random()<.55) add(px+(Math.random()-.5)*34,py+(Math.random()-.5)*34,false,false,false,true);
+      add(px+(Math.random()-.5)*44,py+(Math.random()-.5)*44,false,true,false,true);
+      if(Math.random()<.6) add(px+(Math.random()-.5)*56,py+(Math.random()-.5)*56,false,true,false,true);
     }
-    var BUB=1500;
+    function trail(px,py){
+      if(!lastSpawn){lastSpawn={x:px,y:py};drop(px,py);return}
+      var dx=px-lastSpawn.x,dy=py-lastSpawn.y,d=Math.hypot(dx,dy),gap=8;
+      if(d<gap) return;
+      var n=Math.min(Math.floor(d/gap),12);
+      for(var s=1;s<=n;s++){var f=s*gap/d;drop(lastSpawn.x+dx*f,lastSpawn.y+dy*f)}
+      lastSpawn={x:lastSpawn.x+dx*n*gap/d,y:lastSpawn.y+dy*n*gap/d};
+    }
+    var BUB=950;
     function bubble(ts0){
       var bs=null,last=0;
       function b(ts){
         if(!on){introRunning=false;return}
         if(bs===null) bs=ts;var ms=ts-bs;
-        var dens=ms<BUB-600?1:Math.max(0,(BUB-ms)/600);
-        if(ts-last>45&&Math.random()<dens){last=ts;
+        var dens=ms<BUB-380?1:Math.max(0,(BUB-ms)/380);
+        if(ts-last>18&&Math.random()<dens){last=ts;
           var r=Lr.all,lr=Lr.last,useLast=Math.random()<.65,box=useLast?lr:r;
           var px=box.left+Math.random()*box.width,py=box.top+box.height*(.2+Math.random()*.8);
           add(px,py,Math.random()<.3,false,true);
@@ -758,7 +766,7 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
     requestAnimationFrame(step);
   }
   var startView=(location.hash||'').slice(1);
-  if(!startView||startView==='home') setTimeout(intro,420);
+  if(!startView||startView==='home') setTimeout(intro,300);
 })();
 </script>
 
