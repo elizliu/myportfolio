@@ -84,8 +84,6 @@ figcaption b{color:var(--ink);font-weight:600;display:block}
 ul.plain{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:10px}
 ul.plain li::marker{color:var(--accent)}
 
-footer{border-top:1px solid var(--line);padding-top:28px;display:flex;flex-wrap:wrap;gap:12px 32px;align-items:baseline;font-size:.98rem}
-footer h3{flex-basis:100%}
 @media (prefers-reduced-motion:no-preference){figure img{transition:transform .25s ease}figure img:hover{transform:translateY(-3px)}}
 
 .sub{font-size:clamp(1.15rem,2vw,1.35rem);color:var(--muted)}
@@ -173,10 +171,11 @@ footer h3{flex-basis:100%}
 @media (max-width:640px){.roles{grid-template-columns:1fr}}
 
 html,body{overflow-x:clip}
+body{margin:0}
 .hphoto{position:relative}
 .hphoto::before{content:"";position:absolute;inset:-14% -12%;z-index:-1;border-radius:50%;
   background:radial-gradient(circle at 28% 30%,#8E7BFF 0,transparent 55%),radial-gradient(circle at 78% 72%,#FFA8C5 0,transparent 52%),radial-gradient(circle at 75% 18%,#8FD3FF 0,transparent 46%);
-  filter:blur(46px);opacity:.5;animation:drift 16s ease-in-out infinite alternate}
+  filter:blur(56px);opacity:.28;animation:drift 16s ease-in-out infinite alternate}
 @keyframes drift{0%{transform:translate(0,0) rotate(0deg) scale(1)}50%{transform:translate(3%,-4%) rotate(8deg) scale(1.05)}100%{transform:translate(-3%,3%) rotate(-6deg) scale(.97)}}
 .collage{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .collage img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px;box-shadow:0 10px 28px rgba(33,27,91,.16);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
@@ -208,6 +207,29 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
 .nextlink:focus-visible,.nfoot a:focus-visible{outline:2px solid var(--lilac);outline-offset:4px;border-radius:6px}
 @media (max-width:860px){.hero{grid-template-columns:minmax(0,1fr)}.hphoto{max-width:460px;width:100%}}
 @media (prefers-reduced-motion:reduce){.hphoto::before,.dot::after,.htext>*{animation:none}.collage img{transition:none}}
+
+.site-foot{margin-inline:calc(50% - 50vw);margin-bottom:-64px;background:var(--deep);color:#fff;position:relative;overflow:hidden;isolation:isolate}
+.site-foot::before{content:"";position:absolute;left:-10%;bottom:-60%;width:60%;height:160%;z-index:-1;background:radial-gradient(circle,#6C57F5 0,transparent 62%);opacity:.45;filter:blur(30px)}
+.ff-inner{max-width:1360px;margin:0 auto;padding:clamp(56px,8vw,110px) max(clamp(22px,9vw,170px),env(safe-area-inset-right,0px)) 40px max(clamp(22px,9vw,170px),env(safe-area-inset-left,0px));display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px clamp(32px,6vw,96px);align-items:end}
+.ff-inner{box-sizing:content-box}
+.ff-head{font-size:clamp(2.2rem,5vw,4rem);line-height:1.04;letter-spacing:-.025em;color:#fff}
+.ff-links{display:flex;flex-direction:column}
+.ff-links a{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.22);color:#fff;text-decoration:none;font-size:1.05rem;transition:padding .25s,color .25s}
+.ff-links a:hover{color:var(--lilac);padding-left:8px}
+.ff-links a:focus-visible{outline:2px solid var(--lilac);outline-offset:4px}
+.ff-copy{grid-column:1 / -1;font:500 .82rem/1.4 var(--mono);color:#B9B3E8;text-transform:uppercase;letter-spacing:.06em;margin-top:24px}
+#sparkles{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:50}
+@media (max-width:760px){.ff-inner{grid-template-columns:minmax(0,1fr)}}
+.ff-plain{display:flex;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.22);color:#D5D0FF;font-size:1.05rem}
+
+@keyframes pagein{from{opacity:0}to{opacity:1}}
+.wrap{animation:pagein .45s ease-out both}
+.sparkle-toggle{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:60;display:inline-flex;align-items:center;gap:8px;padding:10px 16px 10px 13px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:var(--ink);font:500 .82rem/1 var(--mono);cursor:pointer;box-shadow:0 8px 24px rgba(33,27,91,.14);transition:transform .2s,box-shadow .2s}
+.sparkle-toggle:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(33,27,91,.2)}
+.sparkle-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.st-icon{color:#F2C14E;font-size:1.05rem;line-height:1;transition:color .2s}
+.sparkle-toggle.off .st-icon{color:#B8BCC4}
+@media (prefers-reduced-motion:reduce){.wrap{animation:none}}
 </style>
 </head>
 <body>
@@ -576,12 +598,17 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
     <div class="nfoot"><a href="#home">← All projects</a><a href="mailto:el3206@columbia.edu">el3206@columbia.edu</a></div>
   </nav>
   </div>
-  <footer>
-    <h3>Get in touch</h3>
-    <span>el3206@columbia.edu</span>
-    <a href="https://www.linkedin.com/in/elizabeth-liu-co29" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="https://github.com/elizliu" target="_blank" rel="noopener">GitHub</a>
-    <span class="muted">Beli @elizliu</span>
+  <footer class="site-foot">
+    <div class="ff-inner">
+      <h2 class="ff-head">Let’s build something people use every day.</h2>
+      <div class="ff-links">
+        <a href="mailto:el3206@columbia.edu"><span>el3206@columbia.edu</span><span aria-hidden="true">↗</span></a>
+        <a href="https://www.linkedin.com/in/elizabeth-liu-co29" target="_blank" rel="noopener"><span>linkedin.com/in/elizabeth-liu-co29</span><span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/elizliu" target="_blank" rel="noopener"><span>github.com/elizliu</span><span aria-hidden="true">↗</span></a>
+        <span class="ff-plain"><span>Beli @elizliu</span></span>
+      </div>
+      <p class="ff-copy">Open to Summer 2027 product design internships</p>
+    </div>
   </footer>
 </main>
 <script>
@@ -594,6 +621,138 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
     window.scrollTo(0,0);
   }
   window.addEventListener('hashchange',show); show();
+})();
+</script>
+
+<canvas id="sparkles" aria-hidden="true"></canvas>
+<button id="sparkle-toggle" class="sparkle-toggle" type="button" aria-pressed="true"><span class="st-icon" aria-hidden="true">✦</span><span class="st-label">Turn off sparkles</span></button>
+<script>
+(function(){
+  if(!window.matchMedia) return;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, fine=matchMedia('(pointer:fine)').matches;
+  var btn=document.getElementById('sparkle-toggle');
+  var on=!reduce;
+  try{var saved=localStorage.getItem('sparkles'); if(saved==='off') on=false; else if(saved==='on') on=true;}catch(e){}
+  var c=document.getElementById('sparkles'),x=c.getContext('2d'),dpr=Math.min(window.devicePixelRatio||1,2),P=[],running=false;
+  var tiny=['#8E7BFF','#BDB3FF','#FFA8C5','#8FD3FF'],GOLD='#F2C14E';
+  var mouse=null,lastSpawn=null,near=0,count=0,twinkle=null,introRunning=false;
+  function size(){c.width=innerWidth*dpr;c.height=innerHeight*dpr;x.setTransform(dpr,0,0,dpr,0,0)}
+  size();addEventListener('resize',size);
+  function setBtn(){btn.setAttribute('aria-pressed',on?'true':'false');btn.classList.toggle('off',!on);btn.querySelector('.st-label').textContent=on?'Turn off sparkles':'Turn on sparkles';}
+  if(!fine) btn.hidden=true;
+  setBtn();
+  btn.addEventListener('click',function(){
+    on=!on;try{localStorage.setItem('sparkles',on?'on':'off')}catch(e){}
+    if(!on){P.length=0;x.clearRect(0,0,innerWidth,innerHeight);if(twinkle){clearInterval(twinkle);twinkle=null}}
+    else{var r=btn.getBoundingClientRect();for(var k=0;k<6;k++){var a=Math.random()*Math.PI*2,d=14+Math.random()*24;add(r.left+r.width/2+Math.cos(a)*d,r.top+r.height/2+Math.sin(a)*d,k<2,k>3)}}
+    setBtn();
+  });
+  function proximity(mx,my){
+    var best=0;document.querySelectorAll('.wmore,.ntitle,.narrow,.ff-links a,.contact a,.back,.nfoot a,.status').forEach(function(a){
+      if(!a.offsetParent) return;var r=a.getBoundingClientRect();
+      var dx=Math.max(r.left-mx,0,mx-r.right),dy=Math.max(r.top-my,0,my-r.bottom),d=Math.hypot(dx,dy);
+      if(d<28) best=Math.max(best,1-d/28);
+    });return best;
+  }
+  function add(px,py,big,fleck){
+    var gold=!fleck&&(big||Math.random()<.7);
+    P.push({x:px,y:py,vx:(Math.random()-.5)*.25,vy:Math.random()*.15+.05,
+      r:big?7+Math.random()*5:(gold?3+Math.random()*2.5:1.3+Math.random()*.9),big:gold,a:Math.random()*.6-.3,
+      life:0,max:big?900+Math.random()*300:600+Math.random()*300,c:gold?GOLD:tiny[(Math.random()*tiny.length)|0]});
+    if(P.length>160) P.shift();
+    if(!running){running=true;prev=performance.now();requestAnimationFrame(tick)}
+  }
+  function star(p,al,sc){
+    x.save();x.translate(p.x,p.y);x.rotate(p.a);x.scale(sc,sc);x.globalAlpha=al;x.fillStyle=p.c;x.beginPath();
+    var r=p.r,i=r*(p.big?.14:.28);
+    x.moveTo(0,-r);x.quadraticCurveTo(i,-i,r,0);x.quadraticCurveTo(i,i,0,r);x.quadraticCurveTo(-i,i,-r,0);x.quadraticCurveTo(-i,-i,0,-r);
+    x.fill();x.restore();
+  }
+  var prev=performance.now();
+  function tick(t){
+    var dt=Math.min(t-prev,50);prev=t;x.clearRect(0,0,innerWidth,innerHeight);
+    for(var i=P.length-1;i>=0;i--){var p=P[i];p.life+=dt;if(p.life>p.max){P.splice(i,1);continue}
+      p.x+=p.vx*dt/16;p.y+=p.vy*dt/16;var f=p.life/p.max;
+      var al=f<.12?f/.12:1-((f-.12)/.88);var sc=f<.2?.6+f*2:1-(f-.2)*.6;star(p,al*(p.big?.95:.85),sc);}
+    if(P.length) requestAnimationFrame(tick); else {running=false;x.clearRect(0,0,innerWidth,innerHeight)}
+  }
+  function trailAt(px,py,gap,bigEvery){
+    if(lastSpawn&&Math.hypot(px-lastSpawn.x,py-lastSpawn.y)<gap) return;
+    lastSpawn={x:px,y:py};count++;
+    add(px+(Math.random()-.5)*6,py+(Math.random()-.5)*6,count%bigEvery===0);
+    if(Math.random()<.6) add(px+(Math.random()-.5)*22,py+(Math.random()-.5)*22,false,true);
+  }
+  function setNear(){
+    near=(mouse&&on&&!introRunning)?proximity(mouse.x,mouse.y):0;
+    if(near>.3&&!twinkle){twinkle=setInterval(function(){
+      if(!mouse||near<=.3||!on){clearInterval(twinkle);twinkle=null;return}
+      var ang=Math.random()*Math.PI*2,d=10+Math.random()*22;
+      add(mouse.x+Math.cos(ang)*d,mouse.y+Math.sin(ang)*d,Math.random()<.5);
+      if(Math.random()<.5) add(mouse.x+Math.cos(ang+2)*d*1.2,mouse.y+Math.sin(ang+2)*d*1.2,false,true);
+    },120)}
+  }
+  if(fine){
+    addEventListener('pointermove',function(e){mouse={x:e.clientX,y:e.clientY};if(!on||introRunning) return;setNear();trailAt(mouse.x,mouse.y,near>.3?12:18,near>.3?2:4)},{passive:true});
+    addEventListener('scroll',function(){setNear()},{passive:true});
+    document.addEventListener('pointerleave',function(){mouse=null;near=0});
+  }
+  // Opening flourish: a whimsical sparkle path through the header
+  function intro(){
+    if(!on) return;
+    var home=document.querySelector('#view-home:not([hidden])'); if(!home) return;
+    var h1=home.querySelector('h1'),col=home.querySelector('.collage'),lede=home.querySelector('.lede'),bio=home.querySelector('.bio'),roles=home.querySelector('.roles');
+    if(!h1||!col||!bio) return;
+    var N=h1.getBoundingClientRect(),C=col.getBoundingClientRect(),Ld=(lede||bio).getBoundingClientRect(),Bo=bio.getBoundingClientRect(),Ro=(roles||bio).getBoundingClientRect();
+    var maxY=innerHeight-24,pts=[];
+    function cy(y){return Math.min(y,maxY)}
+    function push(px,py){pts.push({x:px,y:cy(py)})}
+    function bez(p0,p1,p2,n){for(var i=1;i<=n;i++){var t=i/n,u=1-t;push(u*u*p0.x+2*u*t*p1.x+t*t*p2.x,u*u*p0.y+2*u*t*p1.y+t*t*p2.y)}}
+    function last(){return pts[pts.length-1]}
+    // 1. glide under the name with a soft wave
+    var y1=N.bottom+12,x0=N.left-16,x1=N.right+24;
+    for(var i=0;i<=60;i++){var t=i/60;push(x0+(x1-x0)*t,y1+Math.sin(t*Math.PI*2)*7)}
+    // 2. arc up and over to the photos
+    var cTop=C.top+C.height*.3;
+    bez(last(),{x:(x1+C.left)/2,y:N.top-30},{x:C.left+8,y:cTop},50);
+    // 3. three loop-de-loops left to right across the photos
+    var R1=Math.min(C.width*.11,46),span=C.width-16,loops=3,w=2*Math.PI*loops,v=span/w;
+    var bx=C.left+8;
+    for(var i=0;i<=150;i++){var th=w*i/150;push(bx+v*th-R1*Math.sin(th),cTop+R1*(1-Math.cos(th))-R1*0)}
+    // 4. swing down the right edge
+    var cLow=Math.min(C.top+C.height*.72,maxY-40);
+    bez(last(),{x:C.right+40,y:(cTop+cLow)/2},{x:C.right-8,y:cLow},40);
+    // 5. two loops right to left across the lower photos
+    var R2=Math.min(C.width*.1,40),w2=2*Math.PI*2,v2=(C.width-16)/w2,sx=C.right-8;
+    for(var i=0;i<=110;i++){var th=w2*i/110;push(sx-v2*th+R2*Math.sin(th),cLow-R2*(1-Math.cos(th)))}
+    // 6. drift over into the text
+    var midY=(Ld.top+Bo.bottom)/2,amp=Math.min(36,(Bo.bottom-Ld.top)/3);
+    bez(last(),{x:(C.left+Ld.right)/2,y:cLow-60},{x:Ld.right,y:midY},50);
+    // 7. swirl through the text, right to left
+    var tx0=Ld.right,tx1=Ld.left+10,cycles=2.5;
+    for(var i=1;i<=160;i++){var t=i/160;push(tx0+(tx1-tx0)*t,midY+Math.sin(t*Math.PI*2*cycles)*amp)}
+    // 8. one small curl, then drift down and away
+    var cx0=last().x,cy0=last().y,rr=22;
+    for(var i=1;i<=40;i++){var th=Math.PI*2*i/40;push(cx0+rr*Math.sin(th),cy0-rr+rr*Math.cos(th))}
+    bez(last(),{x:Ld.left+60,y:(cy0+Ro.bottom)/2},{x:Ld.left+140,y:Ro.bottom+30},50);
+    // arc-length parametrize
+    var L=[0];for(var i=1;i<pts.length;i++) L.push(L[i-1]+Math.hypot(pts[i].x-pts[i-1].x,pts[i].y-pts[i-1].y));
+    var total=L[L.length-1],dur=Math.max(5200,Math.min(8000,total/0.42)),start=null,idx=0;
+    function at(d){while(idx<L.length-2&&L[idx+1]<d) idx++;var seg=L[idx+1]-L[idx]||1,f=(d-L[idx])/seg;return {x:pts[idx].x+(pts[idx+1].x-pts[idx].x)*f,y:pts[idx].y+(pts[idx+1].y-pts[idx].y)*f}}
+    introRunning=true;lastSpawn=null;
+    function step(ts){
+      if(!on){introRunning=false;return}
+      if(start===null) start=ts;
+      var k=Math.min((ts-start)/dur,1);
+      var e=0.5-0.5*Math.cos(Math.PI*k); e=e*.25+k*.75;
+      var p=at(e*total);
+      var keep=k>.85?(1-k)/.15:1;
+      if(Math.random()<keep) trailAt(p.x,p.y,13,4);
+      if(k<1) requestAnimationFrame(step); else {introRunning=false;lastSpawn=null}
+    }
+    requestAnimationFrame(step);
+  }
+  var startView=(location.hash||'').slice(1);
+  if(!startView||startView==='home') setTimeout(intro,420);
 })();
 </script>
 
