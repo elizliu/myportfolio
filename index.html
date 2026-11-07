@@ -696,79 +696,65 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
     addEventListener('scroll',function(){setNear()},{passive:true});
     document.addEventListener('pointerleave',function(){mouse=null;near=0});
   }
-  // Opening flourish: follows Liz's sketched path (under the name, loops through the photo gap, a wide sweep, then bubbles at the quote)
-  var SKETCH=[[120,240,0],[220,298,220],[450,305,440],[700,305,640],[950,315,830],[1130,350,990],[1255,430,1130],[1350,500,1250],[1460,510,1360],[1535,480,1460],[1548,380,1680],[1565,290,1920],[1595,262,2110],[1618,300,2220],[1605,400,2340],[1580,480,2450],[1588,580,2600],[1600,650,2760],[1660,628,2920],[1710,660,3060],[1698,725,3150],[1640,745,3240],[1600,705,3360],[1490,700,3500],[1290,705,3630],[1190,780,3750],[1130,940,3930],[950,1080,4140],[650,1125,4350],[330,1080,4560],[120,920,4750],[65,700,4930],[110,580,5100],[165,548,5270]];
+  // Opening flourish: a sparkle sweep under the name, a playful pop at its end, then the quote fizzes
   function intro(){
     if(!on) return;
     var home=document.querySelector('#view-home:not([hidden])'); if(!home) return;
-    var h1=home.querySelector('h1'),hs=home.querySelector('.collage .headshot'),lede=home.querySelector('.lede'),roles=home.querySelector('.roles'); if(!h1||!hs||!lede) return;
+    var h1=home.querySelector('h1'),lede=home.querySelector('.lede'); if(!h1||!lede) return;
     var rg=document.createRange();rg.selectNodeContents(h1);var R=rg.getBoundingClientRect(),w=R.width,hh=R.height;
-    var H={l:R.left+w*.012,t:R.top+hh*.17,b:R.bottom-hh*.2};
-    var S=hs.getBoundingClientRect();
-    var r2=document.createRange();r2.selectNodeContents(lede);var lr=r2.getClientRects(),LL=lr[lr.length-1],LA=lede.getBoundingClientRect();
-    var RB=(roles||lede).getBoundingClientRect().bottom;
-    function pw(v,A){ // piecewise-linear map from sketch coords to page coords
-      for(var i=0;i<A.length-1;i++){if(v<=A[i+1][0]||i===A.length-2){var a=A[i],c=A[i+1];return a[1]+(v-a[0])*(c[1]-a[1])/(c[0]-a[0])}}
-    }
-    var AX=[[170,H.l],[1255,S.left],[1577,S.right]];
-    var AY=[[47,S.top],[195,H.t],[282,H.b],[550,LL.top+LL.height/2],[697,S.bottom],[1030,RB]];
-    var maxY=innerHeight-14;
-    var P2=SKETCH.map(function(p){return {x:pw(p[0],AX),y:Math.min(pw(p[1],AY),maxY),t:p[2]}});
-    var end=P2[P2.length-1].t,tgt=P2[P2.length-1],start=null,j=0;
-    function cr(a,b2,c,d,u){var u2=u*u,u3=u2*u;return .5*((2*b2)+(-a+c)*u+(2*a-5*b2+4*c-d)*u2+(-a+3*b2-3*c+d)*u3)}
-    function at(ms){
-      while(j<P2.length-2&&P2[j+1].t<ms) j++;
-      var p0=P2[Math.max(j-1,0)],p1=P2[j],p2=P2[j+1],p3=P2[Math.min(j+2,P2.length-1)];
-      var u=Math.max(0,Math.min(1,(ms-p1.t)/((p2.t-p1.t)||1)));
-      return {x:cr(p0.x,p1.x,p2.x,p3.x,u),y:cr(p0.y,p1.y,p2.y,p3.y,u)};
-    }
+    var H={l:R.left+w*.012,t:R.top+hh*.17,r:R.right-w*.011,b:R.bottom-hh*.2};
+    var r2=document.createRange();r2.selectNodeContents(lede);var LA=lede.getBoundingClientRect(),lr=r2.getClientRects(),LL=lr[lr.length-1];
+    var cols=['#8E7BFF','#BDB3FF','#FFA8C5','#8FD3FF'];
+    var x0=H.l-16,x1=H.r+18,y=H.b+14,SWEEP=850,start=null;
     introRunning=true;lastSpawn=null;
     function drop(px,py){count++;
       add(px+(Math.random()-.5)*8,py+(Math.random()-.5)*8,count%4===0,false,false,true);
-      if(Math.random()<.4) add(px+(Math.random()-.5)*18,py+(Math.random()-.5)*18,false,false,false,true);
-      if(Math.random()<.8) add(px+(Math.random()-.5)*24,py+(Math.random()-.5)*24,false,true,false,true);
+      if(Math.random()<.4) add(px+(Math.random()-.5)*18,py+(Math.random()-.5)*16,false,false,false,true);
+      if(Math.random()<.8) add(px+(Math.random()-.5)*24,py+(Math.random()-.5)*20,false,true,false,true);
     }
     function trail(px,py){
       if(!lastSpawn){lastSpawn={x:px,y:py};drop(px,py);return}
       var dx=px-lastSpawn.x,dy=py-lastSpawn.y,d=Math.hypot(dx,dy),gap=9;
       if(d<gap) return;
-      var n=Math.min(Math.floor(d/gap),10);
+      var n=Math.min(Math.floor(d/gap),12);
       for(var s=1;s<=n;s++){var f=s*gap/d;drop(lastSpawn.x+dx*f,lastSpawn.y+dy*f)}
       lastSpawn={x:lastSpawn.x+dx*n*gap/d,y:lastSpawn.y+dy*n*gap/d};
     }
-    function pop(){
-      var cols=['#8E7BFF','#BDB3FF','#FFA8C5','#8FD3FF'];
-      for(var k=0;k<7;k++)(function(k){setTimeout(function(){if(!on) return;
-        var cx=tgt.x+(Math.random()-.2)*70,cy=tgt.y+(Math.random()-.6)*34;
+    function pop(cx,cy){
+      for(var k=0;k<6;k++)(function(k){setTimeout(function(){if(!on) return;
+        var px=cx+(Math.random()-.3)*46,py=cy+(Math.random()-.5)*46;
         for(var i=0;i<4;i++){var a=Math.random()*Math.PI*2,sp=.25+Math.random()*.3;
-          P.push({x:cx,y:cy,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-.3,r:i===0?5+Math.random()*3:(i===3?1.4+Math.random():2.5+Math.random()*1.5),
-            big:i!==3,a:Math.random()*.6-.3,life:0,max:650+Math.random()*350,c:i===3?cols[(Math.random()*4)|0]:'#F2C14E'});}
+          P.push({x:px,y:py,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-.3,r:i===0?6+Math.random()*3:(i===3?1.4+Math.random():2.5+Math.random()*1.5),
+            big:i!==3,a:Math.random()*.6-.3,life:0,max:700+Math.random()*350,c:i===3?cols[(Math.random()*4)|0]:'#F2C14E'});}
         if(!running){running=true;prev=performance.now();requestAnimationFrame(tick)}
-      },k*70)})(k);
+      },k*75)})(k);
     }
     var BUB=1700;
-    function bubble(){
-      pop();var bs=null,last=0;
-      function b2(ts){
+    function fizz(){
+      var bs=null,last=0;
+      function f(ts){
         if(!on){introRunning=false;return}
         if(bs===null) bs=ts;var ms=ts-bs;
-        var dens=ms<BUB-550?1:Math.max(0,(BUB-ms)/550);
-        if(ts-last>12&&Math.random()<dens){last=ts;
+        var ramp=Math.min(1,ms/250),dens=(ms<BUB-550?1:Math.max(0,(BUB-ms)/550))*ramp;
+        if(ts-last>14&&Math.random()<dens){last=ts;
           for(var z=0;z<2;z++){
-            var box=Math.random()<.6?LL:LA,px=box.left+Math.random()*box.width,py=box.top+box.height*(.1+Math.random()*.9);
-            add(px,py,Math.random()<.3,false,true);
+            var box=Math.random()<.55?LL:LA,px=box.left+Math.random()*box.width,py=box.top+box.height*(.1+Math.random()*.9);
+            add(px,py,Math.random()<.28,false,true);
             if(Math.random()<.8) add(px+(Math.random()-.5)*26,py+(Math.random()-.5)*16,false,true,true);
           }
         }
-        if(ms<BUB) requestAnimationFrame(b2); else {introRunning=false;lastSpawn=null}
+        if(ms<BUB) requestAnimationFrame(f); else {introRunning=false;lastSpawn=null}
       }
-      requestAnimationFrame(b2);
+      requestAnimationFrame(f);
     }
+    function eIO(u){return u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2}
     function step(ts){
       if(!on){introRunning=false;return}
       if(start===null) start=ts;
-      var ms=Math.min(ts-start,end),p=at(ms);trail(p.x,p.y);
-      if(ms<end) requestAnimationFrame(step); else bubble();
+      var u=Math.min((ts-start)/SWEEP,1),e=eIO(u);
+      trail(x0+(x1-x0)*e,y+Math.sin(e*Math.PI)*-4);
+      if(u<1) requestAnimationFrame(step);
+      else{pop(H.r+34,(H.t+H.b)/2);setTimeout(fizz,520)}
     }
     requestAnimationFrame(step);
   }
