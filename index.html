@@ -230,6 +230,8 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
 .st-icon{color:#F2C14E;font-size:1.05rem;line-height:1;transition:color .2s}
 .sparkle-toggle.off .st-icon{color:#B8BCC4}
 @media (prefers-reduced-motion:reduce){.wrap{animation:none}}
+#sparkles-back{position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1}
 </style>
 </head>
 <body>
@@ -624,6 +626,7 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
 })();
 </script>
 
+<canvas id="sparkles-back" aria-hidden="true"></canvas>
 <canvas id="sparkles" aria-hidden="true"></canvas>
 <button id="sparkle-toggle" class="sparkle-toggle" type="button" aria-pressed="true"><span class="st-icon" aria-hidden="true">✦</span><span class="st-label">Turn off sparkles</span></button>
 <script>
@@ -633,17 +636,17 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
   var btn=document.getElementById('sparkle-toggle');
   var on=!reduce;
   try{var saved=localStorage.getItem('sparkles'); if(saved==='off') on=false; else if(saved==='on') on=true;}catch(e){}
-  var c=document.getElementById('sparkles'),x=c.getContext('2d'),dpr=Math.min(window.devicePixelRatio||1,2),P=[],running=false;
+  var c=document.getElementById('sparkles'),x=c.getContext('2d'),cb=document.getElementById('sparkles-back'),xb=cb.getContext('2d'),dpr=Math.min(window.devicePixelRatio||1,2),P=[],running=false;
   var tiny=['#8E7BFF','#BDB3FF','#FFA8C5','#8FD3FF'],GOLD='#F2C14E';
   var mouse=null,lastSpawn=null,near=0,count=0,twinkle=null,introRunning=false;
-  function size(){c.width=innerWidth*dpr;c.height=innerHeight*dpr;x.setTransform(dpr,0,0,dpr,0,0)}
+  function size(){c.width=cb.width=innerWidth*dpr;c.height=cb.height=innerHeight*dpr;x.setTransform(dpr,0,0,dpr,0,0);xb.setTransform(dpr,0,0,dpr,0,0)}
   size();addEventListener('resize',size);
   function setBtn(){btn.setAttribute('aria-pressed',on?'true':'false');btn.classList.toggle('off',!on);btn.querySelector('.st-label').textContent=on?'Turn off sparkles':'Turn on sparkles';}
   if(!fine) btn.hidden=true;
   setBtn();
   btn.addEventListener('click',function(){
     on=!on;try{localStorage.setItem('sparkles',on?'on':'off')}catch(e){}
-    if(!on){P.length=0;x.clearRect(0,0,innerWidth,innerHeight);if(twinkle){clearInterval(twinkle);twinkle=null}}
+    if(!on){P.length=0;x.clearRect(0,0,innerWidth,innerHeight);xb.clearRect(0,0,innerWidth,innerHeight);if(twinkle){clearInterval(twinkle);twinkle=null}}
     else{var r=btn.getBoundingClientRect();for(var k=0;k<6;k++){var a=Math.random()*Math.PI*2,d=14+Math.random()*24;add(r.left+r.width/2+Math.cos(a)*d,r.top+r.height/2+Math.sin(a)*d,k<2,k>3)}}
     setBtn();
   });
@@ -654,27 +657,30 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
       if(d<28) best=Math.max(best,1-d/28);
     });return best;
   }
+  var BACK=false;
   function add(px,py,big,fleck,rise,burst){
     var gold=!fleck&&(big||Math.random()<.7);
     P.push({x:px,y:py,vx:(Math.random()-.5)*(burst?.45:rise?.4:.25),vy:rise?-(.25+Math.random()*.4):(burst?(Math.random()-.4)*.45:Math.random()*.15+.05),
       r:big?7+Math.random()*5:(gold?3+Math.random()*2.5:1.3+Math.random()*.9),big:gold,a:Math.random()*.6-.3,
-      life:0,max:(big?900+Math.random()*300:600+Math.random()*300)*(rise?1.4:burst?1.35:1),c:gold?GOLD:tiny[(Math.random()*tiny.length)|0]});
+      life:0,max:(big?900+Math.random()*300:600+Math.random()*300)*(rise?1.4:burst?1.35:1),c:gold?GOLD:tiny[(Math.random()*tiny.length)|0],back:BACK});
     if(P.length>600) P.shift();
     if(!running){running=true;prev=performance.now();requestAnimationFrame(tick)}
   }
   function star(p,al,sc){
-    x.save();x.translate(p.x,p.y);x.rotate(p.a);x.scale(sc,sc);x.globalAlpha=al;x.fillStyle=p.c;x.beginPath();
+    var g=p.back?xb:x;if(p.back) al*=.62;
+    g.save();g.translate(p.x,p.y);g.rotate(p.a);g.scale(sc,sc);g.globalAlpha=al;g.fillStyle=p.c;g.beginPath();
     var r=p.r,i=r*(p.big?.14:.28);
-    x.moveTo(0,-r);x.quadraticCurveTo(i,-i,r,0);x.quadraticCurveTo(i,i,0,r);x.quadraticCurveTo(-i,i,-r,0);x.quadraticCurveTo(-i,-i,0,-r);
-    x.fill();x.restore();
+    g.moveTo(0,-r);g.quadraticCurveTo(i,-i,r,0);g.quadraticCurveTo(i,i,0,r);g.quadraticCurveTo(-i,i,-r,0);g.quadraticCurveTo(-i,-i,0,-r);
+    g.fill();g.restore();
   }
   var prev=performance.now();
   function tick(t){
-    var dt=Math.min(t-prev,50);prev=t;x.clearRect(0,0,innerWidth,innerHeight);
+    var dt=Math.min(t-prev,50);prev=t;x.clearRect(0,0,innerWidth,innerHeight);xb.clearRect(0,0,innerWidth,innerHeight);
     for(var i=P.length-1;i>=0;i--){var p=P[i];p.life+=dt;if(p.life>p.max){P.splice(i,1);continue}
+      if(p.drag){var dk=Math.pow(p.drag,dt/16);p.vx*=dk;p.vy*=dk;p.vy+=(p.g||0)*dt/16}
       p.x+=p.vx*dt/16;p.y+=p.vy*dt/16;var f=p.life/p.max;
       var al=f<.12?f/.12:1-((f-.12)/.88);var sc=f<.2?.6+f*2:1-(f-.2)*.6;star(p,al*(p.big?.95:.85),sc);}
-    if(P.length) requestAnimationFrame(tick); else {running=false;x.clearRect(0,0,innerWidth,innerHeight)}
+    if(P.length) requestAnimationFrame(tick); else {running=false;x.clearRect(0,0,innerWidth,innerHeight);xb.clearRect(0,0,innerWidth,innerHeight)}
   }
   function trailAt(px,py,gap,bigEvery){
     if(lastSpawn&&Math.hypot(px-lastSpawn.x,py-lastSpawn.y)<gap) return;
@@ -708,16 +714,23 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
     function spark(px,py,r,life,col,vx,vy){P.push({x:px,y:py,vx:vx||0,vy:vy||0,r:r,big:col===GOLDC,a:Math.random()*.6-.3,life:0,max:life,c:col});
       if(!running){running=true;prev=performance.now();requestAnimationFrame(tick)}}
     // comet path: dips under the name, then sweeps up past "Liu" to where the pop happens
-    var A={x:H.l-10,y:H.b+12},C1={x:H.r+4,y:H.b+30},B={x:H.r+36,y:H.t+(H.b-H.t)*.5};
+    var gapR=Math.max(0,(home.querySelector('.collage').getBoundingClientRect().left-H.r));var A={x:H.l-10,y:H.b+12},B={x:H.r+Math.min(80,gapR*.3),y:H.t+(H.b-H.t)*.4},C1={x:H.r+10,y:H.b+34};
     function pt(u){var v=1-u;return {x:v*v*A.x+2*v*u*C1.x+u*u*B.x,y:v*v*A.y+2*v*u*C1.y+u*u*B.y}}
     var SWEEP=900,start=null,last=null,frame=0;
     introRunning=true;
+    function fw(px,py,r,life,col,vx,vy){spark(px,py,r,life,col,vx,vy);var q=P[P.length-1];q.drag=.94;q.g=.035;}
     function pop(cx,cy){
-      for(var k=0;k<6;k++)(function(k){setTimeout(function(){if(!on) return;
-        var px=cx+(Math.random()-.3)*44,py=cy+(Math.random()-.5)*44;
-        for(var i=0;i<4;i++){var a=Math.random()*Math.PI*2,sp=.22+Math.random()*.28;
-          spark(px,py,i===0?6+Math.random()*3:(i===3?1.4+Math.random():2.5+Math.random()*1.5),700+Math.random()*350,i===3?cols[(Math.random()*4)|0]:GOLDC,Math.cos(a)*sp,Math.sin(a)*sp-.28);}
-      },k*75)})(k);
+      // flash
+      spark(cx,cy,14,260,GOLDC);
+      // main burst: two rings of gold with colored accents
+      var N=22;
+      for(var i=0;i<N;i++){var a=i/N*Math.PI*2+Math.random()*.15,sp=3.4+Math.random()*1.1;
+        fw(cx,cy,i%3===0?5.5:3.5,850+Math.random()*300,i%4===2?cols[(Math.random()*4)|0]:GOLDC,Math.cos(a)*sp,Math.sin(a)*sp);}
+      for(var i=0;i<12;i++){var a=i/12*Math.PI*2+.13,sp=1.8+Math.random()*.6;
+        fw(cx,cy,2.5,750+Math.random()*250,i%2?GOLDC:cols[(Math.random()*4)|0],Math.cos(a)*sp,Math.sin(a)*sp);}
+      // crackle a beat later
+      setTimeout(function(){if(!on) return;for(var k=0;k<10;k++){var a=Math.random()*Math.PI*2,d=26+Math.random()*24;
+        fw(cx+Math.cos(a)*d,cy+Math.sin(a)*d+6,2+Math.random()*1.5,420+Math.random()*250,Math.random()<.7?GOLDC:cols[(Math.random()*4)|0],(Math.random()-.5)*.4,(Math.random()-.5)*.4);}},230);
     }
     var TW=1500;
     function twinkle(){
@@ -728,8 +741,8 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
         var dens=Math.min(1,ms/250)*(ms<TW-500?1:Math.max(0,(TW-ms)/500));
         if(ts-lastT>48&&Math.random()<dens){lastT=ts;
           var box=Math.random()<.55?LL:LA,px=box.left+Math.random()*box.width,py=box.top+box.height*(.1+Math.random()*.9);
-          add(px,py,Math.random()<.2,false,true);
-          if(Math.random()<.5) add(px+(Math.random()-.5)*24,py+(Math.random()-.5)*14,false,true,true);
+          BACK=true;add(px,py,Math.random()<.3,false,true);
+          if(Math.random()<.5) add(px+(Math.random()-.5)*24,py+(Math.random()-.5)*14,false,true,true);BACK=false;
         }
         if(ms<TW) requestAnimationFrame(f); else introRunning=false;
       }
