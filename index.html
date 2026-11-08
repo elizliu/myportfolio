@@ -715,7 +715,7 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
       if(!running){running=true;prev=performance.now();requestAnimationFrame(tick)}}
     // comet path: dips under the name, then sweeps up past "Liu" to where the pop happens
     var gapR=Math.max(0,(home.querySelector('.collage').getBoundingClientRect().left-H.r));var A={x:H.l-10,y:H.b+12},B={x:H.r+Math.min(80,gapR*.3),y:H.t+(H.b-H.t)*.4},C1={x:H.r+10,y:H.b+34};
-    function pt(u){var v=1-u;return {x:v*v*A.x+2*v*u*C1.x+u*u*B.x,y:v*v*A.y+2*v*u*C1.y+u*u*B.y}}
+    var LE={x:H.r+12,y:A.y};function pt(u){return {x:A.x+(LE.x-A.x)*u,y:A.y}}
     var SWEEP=900,start=null,last=null,frame=0;
     introRunning=true;
     function fw(px,py,r,life,col,vx,vy){spark(px,py,r,life,col,vx,vy);var q=P[P.length-1];q.drag=.94;q.g=.035;}
@@ -739,10 +739,10 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
         if(!on){introRunning=false;return}
         if(bs===null) bs=ts;var ms=ts-bs;
         var dens=Math.min(1,ms/250)*(ms<TW-500?1:Math.max(0,(TW-ms)/500));
-        if(ts-lastT>48&&Math.random()<dens){lastT=ts;
-          var box=Math.random()<.55?LL:LA,px=box.left+Math.random()*box.width,py=box.top+box.height*(.1+Math.random()*.9);
+        if(ts-lastT>24&&Math.random()<dens){lastT=ts;
+          var box=Math.random()<.55?LL:LA,px=box.left-14+Math.random()*(box.width+28),py=box.top-8+Math.random()*(box.height+16);
           BACK=true;add(px,py,Math.random()<.3,false,true);
-          if(Math.random()<.5) add(px+(Math.random()-.5)*24,py+(Math.random()-.5)*14,false,true,true);BACK=false;
+          if(Math.random()<.75) add(px+(Math.random()-.5)*24,py+(Math.random()-.5)*14,false,true,true);BACK=false;
         }
         if(ms<TW) requestAnimationFrame(f); else introRunning=false;
       }
