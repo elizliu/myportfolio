@@ -287,6 +287,8 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
 .tabnext{font:500 clamp(1.1rem,1.7vw,1.3rem)/1.2 var(--display);padding:16px 28px;box-shadow:0 6px 18px rgba(33,27,91,.16)}
 .tabnext{background:transparent;color:var(--accent);border:2px solid var(--accent);font-weight:700;box-shadow:none}
 .tabnext:hover{background:var(--accent-soft);color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 18px rgba(33,27,91,.12)}
+.tabnext{align-self:center;position:relative;margin-top:8px}
+.tabnext-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;padding-top:36px;border-top:1px solid var(--line)}
 </style>
 </head>
 <body>
@@ -419,7 +421,7 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
   </section>
 
 
-  <button class="tabnext" type="button" data-go="1">Next: First prototype →</button>
+  <div class="tabnext-wrap"><span class="label">Up next</span><button class="tabnext" type="button" data-go="1">First prototype →</button></div>
   </div>
 
   <div class="tabpanel" id="tp-1" role="tabpanel" aria-labelledby="tb-1" hidden>
@@ -469,7 +471,7 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
   </section>
 
 
-  <button class="tabnext" type="button" data-go="2">Next: User interviews →</button>
+  <div class="tabnext-wrap"><span class="label">Up next</span><button class="tabnext" type="button" data-go="2">User interviews →</button></div>
   </div>
 
   <div class="tabpanel" id="tp-2" role="tabpanel" aria-labelledby="tb-2" hidden>
@@ -529,7 +531,7 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
   </section>
 
 
-  <button class="tabnext" type="button" data-go="3">Next: New proposal →</button>
+  <div class="tabnext-wrap"><span class="label">Up next</span><button class="tabnext" type="button" data-go="3">New proposal →</button></div>
   </div>
 
   <div class="tabpanel" id="tp-3" role="tabpanel" aria-labelledby="tb-3" hidden>
