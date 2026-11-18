@@ -337,6 +337,13 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
 .cfade.in{opacity:1;transform:none}
 @media (max-width:860px){.piece.tall,.piece.wide,.piece.wide.flip{grid-template-columns:minmax(0,1fr)}.piece.flip .pimg{order:0}.piece.tall .pimg img{max-height:70vh}.cer-grid img{height:auto;width:100%}.cer-grid figure{width:calc(50% - 9px)}}
 
+/* status bubble holds both lines */
+.htext .status.sbox{display:inline-flex;flex-direction:column;align-items:flex-start;gap:12px;padding:16px 24px 16px 18px;border-radius:22px;line-height:1.2}
+.sbox p{margin:0;display:flex;align-items:center;gap:10px}
+.sbox .label.accent{padding-left:20px}
+.ff-copy{font-size:clamp(1rem,1.6vw,1.3rem);font-weight:600;letter-spacing:.08em;text-align:center;margin-top:32px}
+@media (max-width:520px){.sbox .label.accent{padding-left:0}.htext .status.sbox{padding:14px 18px}}
+
 </style>
 </head>
 <body>
@@ -344,8 +351,7 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
   <div class="view" id="view-home">
   <header class="hero">
     <div class="htext">
-      <p class="status"><span class="dot" aria-hidden="true"></span>Looking for Summer 2027 internships</p>
-      <p class="label accent">Product Design · Product Management</p>
+      <div class="status sbox"><p><span class="dot" aria-hidden="true"></span>Looking for Summer 2027 internships</p><p class="label accent">Product Design · Product Management</p></div>
       <h1>Elizabeth Liu</h1>
       <p class="sub">Columbia Engineering ’29 · Decision Science &amp; Data Analytics<br>Minors in Artificial Intelligence and Philosophy</p>
       <p class="contact"><a href="mailto:el3206@columbia.edu">el3206@columbia.edu</a><span>·</span><a href="https://www.linkedin.com/in/elizabeth-liu-co29" target="_blank" rel="noopener">LinkedIn</a><span>·</span><a href="https://github.com/elizliu" target="_blank" rel="noopener">GitHub</a></p>
@@ -832,7 +838,7 @@ h1{background:linear-gradient(92deg,var(--ink) 0%,var(--ink) 55%,var(--accent) 1
         <a href="https://github.com/elizliu" target="_blank" rel="noopener"><span>github.com/elizliu</span><span aria-hidden="true">↗</span></a>
         <span class="ff-plain"><span>Beli @elizliu</span></span>
       </div>
-      <p class="ff-copy">Open to Summer 2027 product design internships</p>
+      <p class="ff-copy">Open to Summer 2027 product design &amp; product management internships</p>
     </div>
   </footer>
 </main>
